@@ -64,6 +64,9 @@ http://127.0.0.1:5000
 
 ---
 
+## Demo video Link
+https://drive.google.com/file/d/1SgEvOsHZuZDTfTk286fd_0zQO28YN2vx/view?usp=drivesdk
+
 ## 🏗 Project Structure
 
 ```
