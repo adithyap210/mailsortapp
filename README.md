@@ -90,6 +90,43 @@ mailsortapp/
 - Add advanced filtering options
 
 ---
+## 📡 API Documentation
+
+### 🔹 1. Internal Application Routes
+
+| Route | Method | Description |
+|-------|--------|------------|
+| / | GET | Loads login page |
+| /login | POST | Connects to email account |
+| /dashboard | GET | Displays categorized emails |
+
+---
+
+### 🔹 2. Email Fetching (IMAP Protocol)
+
+The application connects to the email server using the IMAP protocol.
+
+**IMAP Server Example:**
+- Gmail: imap.gmail.com
+- Port: 993 (SSL)
+
+**Purpose:**
+- Authenticate user
+- Fetch emails from inbox
+- Read subject lines
+- Pass data to rule-based classifier
+
+**Protocol Used:** IMAP (Internet Message Access Protocol)  
+**Security:** SSL Encryption
+
+---
+
+### 🔹 3. Email Classification Logic
+
+Emails are categorized using conditional (if-else) logic based on keywords in the subject line.
+
+
+---
 
 ## 👨‍💻 Developer
 Adithya
