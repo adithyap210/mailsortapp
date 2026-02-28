@@ -28,7 +28,7 @@ It helps users organize their inbox in a simple and efficient way.
 ## ⚙️ Installation
 
 ```bash
-git clone https://github.com/yourusername/mailsortapp.git
+git clone https://github.com/adithyap210/mailsortapp.git
 cd mailsortapp
 pip install -r requirements.txt
 
