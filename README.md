@@ -58,9 +58,9 @@ http://127.0.0.1:5000
 ## 📷 Screenshots
 
 
-![Login Page](login.png)
-![Categories Page](categories.png)
-![Dashboard Page](dashboard.png)
+![Login Page](Docs/login.png)
+![Categories Page](Docs/categories.png)
+![Dashboard Page](Docs/dashboard.png)
 
 ---
 
