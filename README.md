@@ -25,7 +25,14 @@ It helps users organize their inbox in a simple and efficient way.
 - Clean and simple web interface
 
 ---
+## ⚙️ Installation
 
+```bash
+git clone https://github.com/yourusername/mailsortapp.git
+cd mailsortapp
+pip install -r requirements.txt
+
+---
 ## 🧠 How Email Sorting Works
 Emails are categorized based on keywords in the subject line using conditional logic.
 
