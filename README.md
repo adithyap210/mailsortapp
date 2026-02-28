@@ -59,8 +59,8 @@ http://127.0.0.1:5000
 
 
 ![Login Page](Docs/login.png)
-![Categories Page](Docs/categories.png)
 ![Dashboard Page](Docs/dashboard.png)
+![Categories Page](Docs/categories.png)
 
 ---
 
