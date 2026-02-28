@@ -51,7 +51,7 @@ http://127.0.0.1:5000
 ## 📷 Screenshots
 
 
-![Home Page](docs/home.png)
+![Login Page](https://github.com/adithyap210/mailsortapp/blob/main/categories.png)
 ![Sorted Emails](docs/sorted.png)
 ![Category View](docs/category.png)
 
