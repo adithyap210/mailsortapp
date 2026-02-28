@@ -51,9 +51,9 @@ http://127.0.0.1:5000
 ## 📷 Screenshots
 
 
-![Login Page](login.png)
-![Sorted Emails](docs/categories.png)
-![Category View](dashboard.png)
+login.png
+categories.png
+dashboard.png
 
 ---
 
