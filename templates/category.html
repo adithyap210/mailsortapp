@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} Emails - Mail Organizer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #1a202c;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: white;
+            padding: 24px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .category-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .category-title h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+
+        .category-count {
+            font-size: 14px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #f8fafc;
+            border-color: #cbd5e0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .emails-grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .email-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.08),
+                0 1px 3px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid transparent;
+        }
+
+        .email-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(102, 126, 234, 0.1), 
+                transparent);
+        }
+
+        .email-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 8px 30px rgba(0, 0, 0, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .email-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .email-subject {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .email-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .email-sender {
+            font-size: 14px;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        .email-date {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .email-body {
+            font-size: 15px;
+            color: #64748b;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .no-emails {
+            text-align: center;
+            padding: 80px 20px;
+            color: #64748b;
+        }
+
+        .no-emails-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .no-emails-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .no-emails-subtext {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        /* Category-specific colors */
+        .student-query { border-left-color: #3b82f6; }
+        .parent-query { border-left-color: #8b5cf6; }
+        .administration { border-left-color: #f97316; }
+        .events { border-left-color: #14b8a6; }
+        .spam { border-left-color: #6b7280; }
+
+        .student-query .category-icon { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .parent-query .category-icon { background: linear-gradient(135deg, #8b5cf6, #a78bfa); }
+        .administration .category-icon { background: linear-gradient(135deg, #f97316, #fb923c); }
+        .events .category-icon { background: linear-gradient(135deg, #14b8a6, #2dd4bf); }
+        .spam .category-icon { background: linear-gradient(135deg, #6b7280, #9ca3af); }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .container {
+                padding: 20px 16px;
+            }
+
+            .email-card {
+                padding: 20px;
+            }
+
+            .email-header {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .email-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .category-title h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .email-actions {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="category-info">
+                <div class="category-icon {{ name | lower | replace(' ', '-') }}">
+                    {% if name == 'Student Query' %}👨‍🎓
+                    {% elif name == 'Parent Query' %}👨‍👩‍👧‍👦
+                    {% elif name == 'Administration' %}🏢
+                    {% elif name == 'Events' %}📅
+                    {% elif name == 'Spam' %}🗑️
+                    {% else %}📨
+                    {% endif %}
+                </div>
+                <div class="category-title">
+                    <h1>{{ name }}</h1>
+                    <div class="category-count">{{ emails | length }} emails</div>
+                </div>
+            </div>
+            <a href="{{ url_for('dashboard') }}" class="back-btn">
+                <span>←</span>
+                <span>Back to Dashboard</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container">
+        {% if emails %}
+            <div class="emails-grid">
+                {% for email in emails %}
+                <div class="email-card {{ name | lower | replace(' ', '-') }}">
+                    <div class="email-header">
+                        <div>
+                            <h3 class="email-subject">{{ email.subject }}</h3>
+                            <div class="email-meta">
+                                <span class="email-sender">{{ email.sender }}</span>
+                                <span class="email-date">{{ email.date }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="email-body">{{ email.body }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="no-emails">
+                <div class="no-emails-icon">📭</div>
+                <div class="no-emails-text">No emails found</div>
+                <div class="no-emails-subtext">There are no emails in the {{ name }} category yet.</div>
+            </div>
+        {% endif %}
+    </main>
+
+    <script>
+        // Add interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.email-card');
+            
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${0.1 * index}s`;
+                card.style.animation = 'fadeInUp 0.6s ease-out both';
+            });
+        });
+    </script>
+</body>
+</html>

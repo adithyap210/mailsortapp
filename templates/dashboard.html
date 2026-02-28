@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mail Organizer - Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            color: #1a202c;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #64748b;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 32px 24px;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.08),
+                0 1px 3px rgba(0, 0, 0, 0.02);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            transition: height 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .category-card:hover::before {
+            height: 8px;
+        }
+
+        .category-card.student-query::before {
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+
+        .category-card.parent-query::before {
+            background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+        }
+
+        .category-card.administration::before {
+            background: linear-gradient(90deg, #f97316, #fb923c);
+        }
+
+        .category-card.events::before {
+            background: linear-gradient(90deg, #14b8a6, #2dd4bf);
+        }
+
+        .category-card.spam::before {
+            background: linear-gradient(90deg, #6b7280, #9ca3af);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 24px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .student-query .card-icon {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+        }
+
+        .parent-query .card-icon {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        }
+
+        .administration .card-icon {
+            background: linear-gradient(135deg, #f97316, #fb923c);
+        }
+
+        .events .card-icon {
+            background: linear-gradient(135deg, #14b8a6, #2dd4bf);
+        }
+
+        .spam .card-icon {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 8px;
+        }
+
+        .card-count {
+            font-size: 32px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .card-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 12px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .trend-up {
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+        }
+
+        .trend-down {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+        }
+
+        .logout-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .logout-link {
+            color: #ef4444;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .logout-link:hover {
+            color: #dc2626;
+            text-decoration: underline;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 16px;
+            }
+
+            .category-card {
+                padding: 24px 16px;
+            }
+
+            .card-count {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mail Organizer</h1>
+            <p class="subtitle">Overview of all email categories</p>
+        </header>
+
+        <main>
+            <div class="cards-grid">
+                {% for item in counts %}
+                <a href="{{ url_for('category', name=item.name) }}" class="category-card {{ item.name | lower }}">
+                    <div class="card-icon">📨</div>
+                    <h3 class="card-title">{{ item.name }}</h3>
+                    <div class="card-count">{{ item.count }}</div>
+                    <p class="card-description">{{ item.description }}</p>
+                    <div class="card-trend trend-up">
+                        <span>↑</span>
+                        <span>+{{ item.trend }} this week</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </main>
+
+        <div class="logout-section">
+            <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.category-card');
+            
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${0.1 * index}s`;
+            });
+        });
+    </script>
+</body>
+</html>
